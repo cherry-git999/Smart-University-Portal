@@ -1,29 +1,16 @@
 fetch("header.html")
 .then(res => res.text())
-.then(data => document.getElementById("header").innerHTML = data);
+.then(data => {
+    document.getElementById("header").innerHTML = data
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navlinks");
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        menuToggle.textContent = navLinks.classList.contains("active")? "✖" : "☰";
+    });
+});
 
 fetch("footer.html")
-.then(res => res.text()).then(data => document.getElementById("footer").innerHTML = data);
+.then(res => res.text())
+.then(data => document.getElementById("footer").innerHTML = data);
 
-        
-// Hamburger Menu Functionality
-document.addEventListener("click", function (e) {
-
-    const menu = document.getElementById("navlinks");
-    const logo = document.getElementById("menuToggle");
-
-    // If logo is clicked → toggle menu
-    if (e.target.closest("#menuToggle")) {
-        menu.classList.toggle("active");
-        return;
-    }
-
-    // If click is outside menu AND outside logo → close menu
-    if (
-        menu.classList.contains("active") &&
-        !e.target.closest("#navlinks") &&
-        !e.target.closest("#menuToggle")
-    ) {
-        menu.classList.remove("active");
-    }
-});
